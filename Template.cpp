@@ -21,6 +21,7 @@ typedef vector<int> vi;
 typedef pair<int,int> pi;
 
 int main() {
+    FASTER;
     clock_t tStart = clock();
     freopen("in.txt", "r", stdin);
     freopen("out.txt", "w", stdout);
