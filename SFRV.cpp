@@ -16,8 +16,15 @@
 using namespace std;
 int n;
 
+void printA(int *a, int in, int sum) {
+    for (int t=1;t<=n;++t) cout << a[t] << " "; 
+
+    cout << in << " " << sum << endl;
+}
+
 int Solve(int *a, int in, bool *select, int sum) {
-    if (in >= n-1)
+    printA(a, in, sum);
+    if (in > n)
         return sum;
 
     if (select[in] || select[in+1])
@@ -26,13 +33,12 @@ int Solve(int *a, int in, bool *select, int sum) {
     int lf = Solve(a, in + 1, select, sum);
     swap(a[in], a[in+1]);
     select[in] = select[in+1] = true;
-    cout << in << " " << in+1 << " | ";
 
     int rg = Solve(a, in + 1, select, (sum - ((a[in] * in) + (a[in+1] * (in+1))) + ((a[in] * (in+1)) + (a[in+1] * in))));
 
-    cout << in << " " << in+1 << " | ";
     swap(a[in], a[in+1]);
     select[in] = select[in+1] = false;
+
     return max(lf, rg);
 }
 
@@ -45,14 +51,14 @@ int main() {
     cin >> T;
     while (T--) {
         cin >> n;
-        int a[n], sum = 0;
-        bool select[n];
-        for (int t=0;t<n;++t) {
+        int a[n+1], sum = 0;
+        bool select[n+1];
+        for (int t=1;t<=n;++t) {
             cin >> a[t];
-            sum += a[t] * (t+1);
+            sum += a[t] * t;
             select[t] = false;
         }
-        cout << Solve(a, 0, select, sum) << endl;
+        cout << Solve(a, 1, select, sum) << endl;
         cout << endl;
     }
 }
